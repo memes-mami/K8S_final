@@ -1,0 +1,24 @@
+# pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: checkpoint-pvc
+spec:
+  accessModes:
+    - ReadOnlyMany  # Should match the PV
+  resources:
+    requests:
+      storage: 100Mi
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: checkpoint-pvc2
+spec:
+  accessModes:
+    - ReadOnlyMany  # Should match the PV
+  resources:
+    requests:
+      storage: 500Mi
+

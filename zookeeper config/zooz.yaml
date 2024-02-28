@@ -1,0 +1,1449 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker1-0
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker1
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "1-0"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker1-1
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker1
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "1-1"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker1-2
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker1
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "1-2"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker2-0
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker2
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "2-0"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker2-1
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker2
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "2-1"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker2-2
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker2
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "2-2"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker3-0
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker3
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "3-0"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker3-1
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker3
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "3-1"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker3-2
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker3
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "3-2"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker4-0
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker4
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "4-0"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker4-1
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker4
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "4-1"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker4-2
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker4
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "4-2"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker5-0
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker5
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "5-0"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker5-1
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker5
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "5-1"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker5-2
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker5
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "5-2"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker6-0
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker6
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "6-0"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker6-1
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker6
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "6-1"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker6-2
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker6
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "6-2"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker7-0
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker7
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "7-0"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker7-1
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker7
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "7-1"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker7-2
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker7
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "7-2"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker8-0
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker8
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "8-0"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker8-1
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker8
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "8-1"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker8-2
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker8
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "8-2"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker9-0
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker9
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "9-0"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker9-1
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker9
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "9-1"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker9-2
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker9
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "9-2"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker10-0
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker10
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "10-0"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker10-1
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker10
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "10-1"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker10-2
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker10
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "10-2"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker11-0
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker11
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "11-0"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker11-1
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker11
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "11-1"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker11-2
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker11
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "11-2"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker12-0
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker12
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "12-0"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker12-1
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker12
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "12-1"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker12-2
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker12
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "12-2"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker13-0
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker13
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "13-0"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker13-1
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker13
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "13-1"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker13-2
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker13
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "13-2"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker14-0
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker14
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "14-0"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker14-1
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker14
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "14-1"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker14-2
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker14
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "14-2"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker15-0
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker15
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "15-0"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker15-1
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker15
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "15-1"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker15-2
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker15
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "15-2"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker16-0
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker16
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "16-0"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker16-1
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker16
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "16-1"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker16-2
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker16
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "16-2"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker17-0
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker17
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "17-0"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker17-1
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker17
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "17-1"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker17-2
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker17
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "17-2"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker18-0
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker18
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "18-0"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker18-1
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker18
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "18-1"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker18-2
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker18
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "18-2"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker19-0
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker19
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "19-0"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker19-1
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker19
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "19-1"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker19-2
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker19
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "19-2"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker20-0
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker20
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "20-0"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker20-1
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker20
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "20-1"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker20-2
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker20
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "20-2"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker21-0
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker21
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "21-0"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker21-1
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker21
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "21-1"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zookeeper-pod-worker21-2
+  labels:
+    app: zookeeper
+spec:
+  nodeName: worker21
+  containers:
+    - name: zookeeper-container
+      image: digitalwonderland/zookeeper
+      ports:
+      - containerPort: 2181
+      - containerPort: 2888
+      - containerPort: 3888
+      env:
+      - name: ZOOKEEPER_ID
+        value: "21-2"
+      - name: ZOOKEEPER_SERVER_1
+        value: zoo1
+      - name: ZOOKEEPER_SERVER_2
+        value: zoo2

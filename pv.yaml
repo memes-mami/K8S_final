@@ -1,0 +1,240 @@
+# pv.yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: checkpoint-pv
+spec:
+  capacity:
+    storage: 100Mi
+  accessModes:
+    - ReadOnlyMany  # Adjust according to your needs
+  hostPath:
+    path: "/var/lib/kubelet/checkpoints"
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: local-pv1
+  spec:
+    storageClassName: local-storage
+    capacity:
+      storage: 100Mi
+    accessModes:
+      - ReadWriteOnce
+    hostPath:
+      path: "/storage/data1"
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: local-pv2
+  spec:
+    storageClassName: local-storage
+    capacity:
+      storage: 100Mi
+    accessModes:
+      - ReadWriteOnce
+    hostPath:
+      path: "/storage/data2"
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: local-pv3
+  spec:
+    storageClassName: local-storage
+    capacity:
+      storage: 100Mi
+    accessModes:
+      - ReadWriteOnce
+    hostPath:
+      path: "/storage/data3"
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: local-pv4
+  spec:
+    storageClassName: local-storage
+    capacity:
+      storage: 100Mi
+    accessModes:
+      - ReadWriteOnce
+    hostPath:
+      path: "/storage/data4"
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: local-pv5
+  spec:
+    storageClassName: local-storage
+    capacity:
+      storage: 100Mi
+    accessModes:
+      - ReadWriteOnce
+    hostPath:
+      path: "/storage/data5"
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: local-pv6
+  spec:
+    storageClassName: local-storage
+    capacity:
+      storage: 100Mi
+    accessModes:
+      - ReadWriteOnce
+    hostPath:
+      path: "/storage/data6"
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: local-pv7
+  spec:
+    storageClassName: local-storage
+    capacity:
+      storage: 100Mi
+    accessModes:
+      - ReadWriteOnce
+    hostPath:
+      path: "/storage/data7"
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: local-pv8
+  spec:
+    storageClassName: local-storage
+    capacity:
+      storage: 100Mi
+    accessModes:
+      - ReadWriteOnce
+    hostPath:
+      path: "/storage/data8"
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: local-pv9
+  spec:
+    storageClassName: local-storage
+    capacity:
+      storage: 100Mi
+    accessModes:
+      - ReadWriteOnce
+    hostPath:
+      path: "/storage/data9"
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: local-pv10
+  spec:
+    storageClassName: local-storage
+    capacity:
+      storage: 100Mi
+    accessModes:
+      - ReadWriteOnce
+    hostPath:
+      path: "/storage/data10"
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: local-pv11
+  spec:
+    storageClassName: local-storage
+    capacity:
+      storage: 100Mi
+    accessModes:
+      - ReadWriteOnce
+    hostPath:
+      path: "/storage/data11"
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: local-pv12
+  spec:
+    storageClassName: local-storage
+    capacity:
+      storage: 100Mi
+    accessModes:
+      - ReadWriteOnce
+    hostPath:
+      path: "/storage/data12"
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: local-pv13
+  spec:
+    storageClassName: local-storage
+    capacity:
+      storage: 100Mi
+    accessModes:
+      - ReadWriteOnce
+    hostPath:
+      path: "/storage/data13"
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: local-pv14
+  spec:
+    storageClassName: local-storage
+    capacity:
+      storage: 100Mi
+    accessModes:
+      - ReadWriteOnce
+    hostPath:
+      path: "/storage/data14"
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: local-pv15
+  spec:
+    storageClassName: local-storage
+    capacity:
+      storage: 100Mi
+    accessModes:
+      - ReadWriteOnce
+    hostPath:
+      path: "/storage/data15"
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: local-pv16
+  spec:
+    storageClassName: local-storage
+    capacity:
+      storage: 100Mi
+    accessModes:
+      - ReadWriteOnce
+    hostPath:
+      path: "/storage/data16"
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: local-pv17
+  spec:
+    storageClassName: local-storage
+    capacity:
+      storage: 100Mi
+    accessModes:
+      - ReadWriteOnce
+    hostPath:
+      path: "/storage/data17"
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: local-pv18
+  spec:
+    storageClassName: local-storage
+    capacity:
+      storage: 100Mi
+    accessModes:
+      - ReadWriteOnce
+    hostPath:
+      path: "/storage/data18"
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: local-pv19
+  spec:
+    storageClassName: local-storage
+    capacity:
+      storage: 100Mi
+    accessModes:
+      - ReadWriteOnce
+    hostPath:
+      path: "/storage/data19"

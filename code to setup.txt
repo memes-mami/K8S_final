@@ -1,0 +1,844 @@
+
+	
+ Install the basic os components
+
+This is for Ubuntu Linux 20.04 Version only
+
+yes | sudo apt update && sudo apt -y full-upgrade 
+
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+Step 2:
+Install packages for overall code functionality ( must for master / for worker not all mandatory)
+
+snap install helm  --classic
+yes | apt install rpm
+snap install jq 
+yes | apt install git
+yes | sudo apt-get install telnet
+ yes | apt install net-tools
+yes | sudo apt -y install curl apt-transport-https
+yes| curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+sudo apt update
+--------------------------------------------------------------------------------------------------
+Install kubelet, kubeadm and kubectl ( In Master + All Worker Nodes )
+
+sudo apt -y install curl apt-transport-https
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+sudo apt update
+sudo  snap install kubectx --classic
+sudo apt update
+sudo apt install -y curl
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/relsudo ease/stable.txt)/bin/linux/amd64/kubectl"
+chmod +x kubectl
+sudo mv kubectl /usr/local/bin/
+kubectl version --client
+
+sudo apt update
+sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+sudo add-apt-repository "deb https://apt.kubernetes.io/ kubernetes-xenial main"
+sudo apt update
+yes | sudo apt install -y kubelet
+
+kubelet --version
+sudo systemctl enable kubelet
+sudo systemctl start kubelet
+
+sudo apt update
+sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+sudo add-apt-repository "deb https://apt.kubernetes.io/ kubernetes-xenial main"
+sudo add-apt-repository "deb https://apt.kubernetes.io/ kubernetes-xenial main"
+sudo apt update
+yes | sudo apt install -y kubeadm
+kubeadm version
+
+sudo apt-mark hold kubelet kubeadm kubectl
+--------------------------------------------------------------------------------------------------
+
+Step 3: Disable Swap  ( In Master + All Worker Nodes )
+
+
+
+
+sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
+sudo swapoff -a
+sudo mount -a
+free -h
+
+Enable kernel modules and configure sysctl.
+
+# Enable kernel modules
+sudo modprobe overlay
+sudo modprobe br_netfilter
+
+# Add some settings to sysctl
+sudo tee /etc/sysctl.d/kubernetes.conf<<EOF
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+net.ipv4.ip_forward = 1
+EOF
+
+# Reload sysctl
+sudo sysctl --system
+
+-----------------------------------------------
+Step 4: Install Container runtime
+
+FOR DOCKER ( not really required better to install to operate applications images ) 
+
+# Add repo and Install packages
+sudo apt update
+yes | sudo apt install -y77 curl gnupg2 software-properties-common apt-transport-https ca-certificates
+yes | curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+yes | sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+sudo apt update
+yes | sudo apt install -y containerd.io docker-ce docker-ce-cli
+
+# Create required directories
+sudo mkdir -p /etc/systemd/system/docker.service.d
+
+# Create daemon json config file
+sudo tee /etc/docker/daemon.json <<EOF
+{
+  "exec-opts": ["native.cgroupdriver=systemd"],
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "100m"
+  },
+  "storage-driver": "overlay2"
+}
+EOF
+
+# Start and enable Services
+sudo systemctl daemon-reload 
+sudo systemctl restart docker
+sudo systemctl enable docker
+
+-------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+
+FOR CRI-O runtime  ( required for checkpointing , as it is available in crio for now is a  feature gate) 
+
+# Ensure you load modules
+sudo modprobe overlay
+sudo modprobe br_netfilter
+
+# Set up required sysctl params
+sudo tee /etc/sysctl.d/kubernetes.conf<<EOF
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+net.ipv4.ip_forward = 1
+EOF
+
+# Reload sysctl
+sudo sysctl --system
+
+# Add Cri-o repo
+sudo su -
+OS="xUbuntu_20.04"
+VERSION=1.27
+echo "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/$OS/ /" > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
+echo "deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/$VERSION/$OS/ /" > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable:cri-o:$VERSION.list
+curl -L https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable:cri-o:$VERSION/$OS/Release.key | apt-key add -
+curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/$OS/Release.key | apt-key add -
+
+# Install CRI-O
+sudo apt update
+yes | sudo apt install cri-o cri-o-runc
+
+# Update CRI-O CIDR subnet
+sudo sed -i 's/10.85.0.0/172.24.0.0/g' /etc/cni/net.d/100-crio-bridge.conf
+sudo sed -i 's/10.85.0.0/172.24.0.0/g' /etc/cni/net.d/100-crio-bridge.conflist
+
+# Start and enable Service
+sudo systemctl daemon-reload
+sudo systemctl restart crio
+sudo systemctl enable crio
+
+---------------------------
+
+Error 1 (its better if we run it early to escape the error further) 
+
+
+for code :  kubectl edit cm kubelet-config -n kube-system
+error: 
+/usr/local/bin/kubectl: line 2: syntax error near unexpected token `<'
+/usr/local/bin/kubectl: line 2: `<html><head>'
+
+Do 
+
+sudo rm /usr/local/bin/kubectl
+curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+chmod +x kubectl
+sudo mv kubectl /usr/local/bin/kubectl
+---------------------------------------------------------------------------------------------------------------
+Now we have to make a cgroup set to kublet to set cgroup driver to system
+
+Use 
+
+  nano kube.yaml
+
+to open kube.yaml
+
+paste and save the following 
+
+
+
+apiVersion: kubelet.config.k8s.io/v1beta1
+kind: KubeletConfiguration
+...
+cgroupDriver: systemd
+
+
+
+--------------------------------------
+
+now copy it into kubelet system files by using the line 
+
+sudo  cp kube.yaml /etc/kubernetes/kubelet
+-------------------------------------------------------------------------------------
+
+to restart and set the changes
+
+sudo systemctl daemon-reload
+systemctl restart kubelet
+systemctl stop kubelet
+systemctl enable kubelet
+systemctl start kubelet
+systemctl restart kubelet
+
+
+=------------------------------------------------------------------------------------------------------------------------------------
+
+pulling container images ( same is done when we intinalize the kubeadm
+
+
+yes | sudo kubeadm config images pull --cri-socket unix:///var/run/crio/crio.sock
+
+-------------------------------------------------------------------------------------------------------------------------------------
+INITIALIZING KUBEADM using crio ( only in Master ) 
+
+sudo sysctl -p
+sudo kubeadm init \
+  --cri-socket unix:///var/run/crio/crio.sock
+
+ 
+-----------------------------------------------------------------------------------------------------------------
+
+Configure kubectl using commands in the output and start a cluster ( only in Master ) 
+
+mkdir -p $HOME/.kube
+sudo cp -f /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+export KUBECONFIG=/etc/kubernetes/admin.conf
+
+
+-------------------------------------------------------------------------------------
+
+The joining of pods can be done by (which we get from kubeadm inti (basic join command) 
+
+kubeadm join 10.21.0.4:6443 --token guv8t4.ovyuzjmb2p8l70lv \
+        --discovery-token-ca-cert-hash sha256:df08837722a7103e637da463f91844f6d6c4ff8f06117c1e563d751ef5b4c168     
+
+
+
+now if we want to give more config while joining worker node  ( use this to also name our worker nodes) 
+
+ kubeadm join 192.168.124.157:6443 --token az7b8f.u5927g1hxa32evut --discovery-token-ca-cert-hash sha256:938315601a690cb60411b26e20448144bd8c22dafefaf08b25220c94280cb770   --cri-socket unix:///var/run/crio/crio.sock --v=5 --node-name <worker-node-name-we-want-to-give>
+
+replace <name> with the name we want to give to worker to see that name in master node
+---------------------------------------------------------------------------------
+ if we ever need the latest join token we can use the below line to generete a fresh token
+
+kubeadm token create --print-join-command 
+
+
+------------------------------
+
+use this code if the worker node is  not ready after joining master node
+
+kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
+
+-----------------------------------------------------
+the next configuration is needed for k8s cluster 
+
+
+ Install network plugin on Master
+
+kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.1/manifests/tigera-operator.yaml
+------------------------------------------------------------------------------------------
+Next download the custom resources necessary to configure Calico:
+
+curl https://raw.githubusercontent.com/projectcalico/calico/v3.25.1/manifests/custom-resources.yaml -O
+--------------------------------------------------------------------------------------------
+
+Create the manifest in order to install Calico:
+
+kubectl create -f custom-resources.yaml
+
+Untaint the node: (needed or else the pods wont run) 
+
+kubectl taint nodes --all node-role.kubernetes.io/master-
+kubectl taint nodes --all  node-role.kubernetes.io/control-plane-
+
+
+configure calcio to work ( as coredns pods don’t run at first time) 
+
+	
+kubectl apply -f https://docs.projectcalico.org/v3.14/manifests/calico.yaml	
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.10.0/Documentation/kube-flannel.ymlserviceaccount/flannel
+ sysctl net.bridge.bridge-nf-call-iptables=1
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.10.0/Documentation/kube-
+ curl https://docs.projectcalico.org/manifests/calico.yaml -O
+ kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.0/manifests/tigera-operator.yaml
+ curl https://raw.githubusercontent.com/projectcalico/calico/v3.26.0/manifests/custom-resources.yaml -O
+kubectl create -f custom-resources.yaml
+
+kubectl apply -f https://github.com/jetstack/cert-manager/releases/latest/download/cert-manager.crds.yaml
+
+curl https://raw.githubusercontent.com/projectcalico/calico/v3.25.1/manifests/custom-resources.yaml -O
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Create the manifest in order to install Calico:
+kubectl create -f custom-resources.yaml
+	
+kubectl apply -f https://docs.projectcalico.org/v3.14/manifests/calico.yaml
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.10.0/Documentation/kube-flannel.ymlserviceaccount/flannel
+ sysctl net.bridge.bridge-nf-call-iptables=1
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.10.0/Documentation/kube-
+ curl https://docs.projectcalico.org/manifests/calico.yaml -O
+ kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.0/manifests/tigera-operator.yaml
+ curl https://raw.githubusercontent.com/projectcalico/calico/v3.26.0/manifests/custom-resources.yaml -O
+kubectl create -f custom-resources.yaml
+curl -LO https://raw.githubusercontent.com/memes-mami/k8s/main/components.yaml
+kubectl apply -f components.yaml
+------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------------
+
+
+Code for CRIU [ needed to do checkpoint ] ( do in Master + Worker )
+
+CODE TO INSTALL CRIU 
+
+sudo apt-get update
+yes | sudo apt-get install libprotobuf-dev libprotobuf-c0-dev protobuf-c-compiler protobuf-compiler python-protobuf libnl-3-dev libcap-dev libaio-dev libnet-dev
+yes | sudo apt install libprotobuf-dev protobuf-c-compiler protobuf-compiler python-protobuf libnl-3-dev libcap-dev libaio-dev libnet-dev libprotobuf-c-dev
+yes | sudo apt install gcc
+yes | sudo apt-get install libdrm-dev libdrm-amdgpu1
+yes | sudo apt-get install libgnutls28-dev
+yes | sudo apt-get install libnftables-dev
+yes | sudo apt-get install libnftables-dev
+
+yes | sudo apt install pkg-config libbsd-dev asciidoc
+
+git clone https://github.com/checkpoint-restore/criu.git
+ cd criu
+
+yes | sudo apt install python3-pip
+yes | sudo pip3 install protobuf
+sudo pip3 install psutil
+pip install redis
+pip install kubernetes
+pip install /root/criu/crit
+pip install wheel
+pip install build
+pip install numpy
+sudo apt update
+apt-get update
+yes | sudo apt install buildah
+make
+sudo make install
+
+------------------------------------------------------------------
+
+TO DO CHECKPOINTING WE FIRST HAVE TO configure some stuff
+
+sudo nano /etc/crio/crio.conf
+
+
+then find the line
+
+
+
+globally ..........
+.................
+enable_Checkpoint=true (to be changes to true)
+ 
+unhash enable_criu_support and set it to true
+
+also add code below it 
+
+drop_infra_ctr=false
+
+------------------------------------------------------------
+
+so over all it will look like
+
+
+globally ..........
+.................
+enable_criu_support=true
+drop_infra_ctr=false
+
+----------------------------------------------
+then 
+
+sudo systemctl restart crio
+systemctl status crio
+
+-------------------------------------------------------------
+
+now we have to open kubealt config using command 
+
+nano /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+
+we have to add/configure the following
+
+Environment="KUBELET_KUBEADM_ARGS=--container-runtime=remote --container-runtime-endpoint=unix:///var/run/crio/crio.sock --pod-infra-container-image=registry.k8s.io/pause:3.9 --feature-gates=ContainerCheckpoint=true"
+Environment="KUBELET_EXTRA_ARGS=--anonymous-auth=true"
+
+and added 
+
+--feature-gates=ContainerCheckpoint=true
+
+at the end of [it is the first line only]
+
+Environment="KUBELET_KUBECONFIG_ARGS=--bootstrap-kubeconfig=/etc/kubernetes/bootstrap-kubelet.conf
+
+------------------------------------------------------------------------------------------------------------------------------
+now over the file code look like
+
+# Note: This dropin only works with kubeadm and kubelet v1.11+
+[Service]
+Environment="KUBELET_KUBECONFIG_ARGS=--bootstrap-kubeconfig=/etc/kubernetes/bootstrap-kubelet.conf --kubeconfig=/etc/kubernetes/kubelet.conf --feature-gates=ContainerCheckpoint=true"
+Environment="KUBELET_CONFIG_ARGS=--config=/var/lib/kubelet/config.yaml"
+Environment="KUBELET_KUBEADM_ARGS=--container-runtime=remote --container-runtime-endpoint=unix:///var/run/crio/crio.sock --pod-infra-container-image=registry.k8s.io/pause:3.9 --feature-gates=ContainerCheckpoint=true"
+Environment="KUBELET_EXTRA_ARGS=--anonymous-auth=true"
+
+# This is a file that "kubeadm init" and "kubeadm join" generates at runtime, populating the KUBELET_KUBEADM_ARGS variable dynamically
+EnvironmentFile=-/var/lib/kubelet/kubeadm-flags.env
+# This is a file that the user can use for overrides of the kubelet args as a last resort. Preferably, the user should use
+# the .NodeRegistration.KubeletExtraArgs object in the configuration files instead. KUBELET_EXTRA_ARGS should be sourced from this file.
+EnvironmentFile=-/etc/default/kubelet
+ExecStart=
+ExecStart=/usr/bin/kubelet $KUBELET_KUBECONFIG_ARGS $KUBELET_CONFIG_ARGS $KUBELET_KUBEADM_ARGS $KUBELET_EXTRA_ARGS
+
+------------------------------------------------------------
+then apply 
+
+sudo systemctl daemon-reload
+sudo systemctl restart kubelet
+systemctl status kubelet  #check is kubelet is running or not
+-----------------------------------------------
+now we configure only this one
+
+sudo nano /etc/kubernetes/manifests/kube-apiserver.yaml
+---------------------------------------------------------
+then add/change
+
+- --anonymous-auth=true
+- --authorization-mode=AlwaysAllow
+
+then do 
+
+sudo systemctl daemon-reload
+sudo systemctl restart kubelet
+---------------------------------------------------------------------
+
+---------------------------------------------------------
+Create K8s dashboard ( just if u want
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboardkubectl create token/v2.7.0/aio/deploy/recommended.yaml
+kubectl proxy #run in another tab
+------------------
+to force kill port usAGE
+
+sudo fuser -k 8001/tcp
+
+---------------------------
+
+
+then create a service account like
+
+kubectl create serviceaccount jenkins
+kubectl create token jenkins
+
+------------------------------------------------------------
+to reinsti kubeadm (just in case)
+
+sudo rm /etc/kubernetes/manifests/kube-apiserver.yaml
+sudo rm /etc/kubernetes/manifests/kube-controller-manager.yaml
+sudo rm /etc/kubernetes/manifests/kube-scheduler.yaml
+sudo rm /etc/kubernetes/manifests/etcd.yaml
+
+sudo kubeadm reset -f --cri-socket unix:///var/run/crio/crio.sock
+
+----------------------------------------------------------------
+if we get a huge list of configurations then the checkpoint feature has been activated successfully or else we get no output or some erro
+
+curl -skv -X GET  "https://localhost:10250/pods" \
+  --key /etc/kubernetes/pki/apiserver-kubelet-client.key \
+  --cacert /etc/kubernetes/pki/ca.crt \
+  --cert /etc/kubernetes/pki/apiserver-kubelet-client.crt
+
+we get somthing like 
+
+{
+  "kind": "PodList",
+  "apiVersion": "v1",
+  "metadata": {},
+  "items": [
+    {
+      "metadata": {
+        "name": "webserver",
+        "namespace": "default",
+        ...
+        }
+    }
+    ...
+}
+-----------------------------------------------------------
+now we can checkpoint using the following format 
+
+
+curl -sk -X POST  "https://<local-ip-address>:10250/checkpoint/default/<pod-name>/<contianer-in-pod-name>" \
+  --key /etc/kubernetes/pki/apiserver-kubelet-client.key \
+  --cacert /etc/kubernetes/pki/ca.crt \
+  --cert /etc/kubernetes/pki/apiserver-kubelet-client.crt
+---------------------------------------------------------
+ 
+example to checkpoint a redis application
+
+curl -sk -X POST  "https://localhost:10250/checkpoint/default/redis/redis" \
+  --key /etc/kubernetes/pki/apiserver-kubelet-client.key \
+  --cacert /etc/kubernetes/pki/ca.crt \
+  --cert /etc/kubernetes/pki/apiserver-kubelet-client.crt
+
+we get a response like 
+
+
+# {"items":["/var/lib/kubelet/checkpoints/checkpoint-webserver_default-webserver-2022-11-12T10:28:13Z.tar"]}
+
+
+------------------------------------------------------
+
+we get checkpoint of the pod and 
+
+The checkpointing API is available at .../checkpoint/${NAMESPACE}/${POD}/${CONTAINER}
+
+ This request created an archive in /var/lib/kubelet/checkpoints/checkpoint-<pod>_<namespace>-<container>-<timestamp>.tar
+
+--------------------------------------------------------
+we generally get all in .tar format
+
+to check out checkpointed files
+
+# Check the directory:
+ls -l /var/lib/kubelet/checkpoints/
+
+we get somthing like 
+
+total 3840
+-rw------- 1 root root 3931136 Nov 12 10:28 checkpoint-webserver_default-webserver-2022-11-12T10:28:13Z.tar
+
+-----------------------------------------------------------
+
+Depending on the setup you’re using, after running the above curl, you might receive an error along the lines of the following:
+
+
+checkpointing of default/webserver/webserver failed (CheckpointContainer is only supported in the CRI v1 runtime API)
+# or
+checkpointing of default/webserver/webserver failed (rpc error: code = Unknown desc = checkpoint/restore support not available)
+
+That means that your container runtime doesn’t (yet) support checkpointing, or it’s not enabled correctly.
+
+----------------------------------------------------------------
+
+then to work with checkpointing go to the checkpoints directory
+
+
+cd /var/lib/kubelet/checkpoints/
+
+
+# Rename because "tar" doesn't like ":" in names
+mv "checkpoint-webserver_default-webserver-2022-11-12T10:28:13Z.tar" webserver.tar
+
+----------------------------------------------------------
+to know the contents
+
+tar --exclude="*/*" -tf redis.tar #if the name of the container image file isi redis.tar
+
+we will somethin like
+
+
+dump.log
+checkpoint/
+config.dump
+spec.dump
+rootfs-diff.tar
+io.kubernetes.cri-o.LogPath
+-------------------------------------------------
+
+to extract all the files in the checkpoint image file
+
+# Extract:
+tar -xf redis.tar 
+
+and then to look the extracted files
+
+ls checkpoint/
+
+we get output somthing like
+
+cgroup.img        fdinfo-4.img  ids-31.img        mountpoints-13.img       pages-2.img               tmpfs-dev-139.tar.gz.img
+core-1.img        files.img     inventory.img     netns-10.img             pages-3.img               tmpfs-dev-140.tar.gz.img
+core-30.img       fs-1.img      ipcns-var-11.img  pagemap-1.img            pages-4.img               tmpfs-dev-141.tar.gz.img
+core-31.img       fs-30.img     memfd.img         pagemap-30.img           pstree.img                tmpfs-dev-142.tar.gz.img
+descriptors.json  fs-31.img     mm-1.img          pagemap-31.img           seccomp.img               utsns-12.img
+fdinfo-2.img      ids-1.img     mm-30.img         pagemap-shmem-94060.img  timens-0.img
+fdinfo-3.img      ids-30.img    mm-31.img         pages-1.img              tmpfs-dev-136.tar.gz.img
+
+-----------------------------------------------------------
+
+then to know some basic info
+
+cat config.dump 
+
+we get output like
+{
+  "id": "880ee7ddff7f3ce11ee891bd89f8a7356c97b23eb44e0f4fbb51cb7b94ead540",
+  "name": "k8s_webserver_webserver_default_91ad1757-424e-4195-9f73-349b332cbb7a_0",
+  "rootfsImageName": "docker.io/library/nginx:latest",
+  "runtime": "runc",
+  "createdTime": "2022-11-12T10:27:56.460946241Z"
+}
+
+-----------------------------------------------------------
+
+then to create a image file 
+
+use
+
+nano Dockerfile
+-------------------
+paste the following
+
+# Dockerfile
+FROM scratch
+# Need to use ADD because it extracts archives
+ADD redis1.tar .   # if the name of the checpoint is redis1.tar
+
+
+and save the file
+
+----------------------
+then run 
+
+
+buildah bud \
+  --annotation=io.kubernetes.cri-o.annotations.checkpoint.name=redis1 \
+  -t restore-redis1:latest \
+  Dockerfile .
+
+to create the image file
+-------------------------------------------
+
+
+buildah push localhost/restore-redis1:latest docker.io/mami107/restore-redis1:latest
+
+--------------------------------------
+do for creating a pod from our own image file 
+
+nano pod.yaml
+
+paste # for our redis application 
+
+# pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: restore-redis1
+  labels:
+    app: redis
+spec:
+  containers:
+  - name: redis
+    image: docker.io/mami107/restore-redis1:latest
+  nodeName: ubuntu
+
+then run
+
+kubectl apply -f pod.yaml
+---------------------------
+ We can also do checkpoint be extracting the .tar file
+
+
+
+
+
+ to check restore ( only redis ) 
+
+kubectl exec -it restore-redis1 -- sh
+redis-cli 
+auth a-very-complex-password-here
+info replication
+-------------------
+
+
+
+
+before doing prometheus we need to do install kube-metrices
+
+download .yaml file to install
+
+curl -LO https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+
+now few changed to that file to ensure proper setup
+
+nano components.yaml
+------------------------------------
+make changes
+
+- --kubelet-insecure-tls
+hostNetwork: true
+
+like this
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    k8s-app: metrics-server
+  name: metrics-server
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      k8s-app: metrics-server
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        k8s-app: metrics-server
+    spec:
+      hostNetwork: true
+      containers:
+      - args:
+        - --cert-dir=/tmp
+        - --secure-port=4443
+        - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+        - --kubelet-use-node-status-port
+        - --metric-resolution=15s
+        - --kubelet-insecure-tls
+        image: registry.k8s.io/metrics-server/metrics-server:v0.6.4
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+
+------------------------------------------------------------------
+
+now after sometime to see if pod is running
+
+kubectl get po -n kube-system
+
+we need to get kube-metrices pod runnin
+---------------------------------------
+
+now to check if really running
+
+ kubectl top nodes # to get node data
+
+kubectl top pods #to get pod data
+
+-------------------------------------
+For Prometheous setup for grafana
+
+follow link
+
+https://devopscube.com/setup-prometheus-monitoring-on-kubernetes/
+
+
+git clone https://github.com/techiescamp/kubernetes-prometheus
+
+-------
+then
+
+cd kubernetes-prometheus
+-----------
+kubectl create namespace monitoring
+kubectl create -f clusterRole.yaml
+kubectl create -f config-map.yaml
+kubectl create  -f prometheus-deployment.yaml 
+kubectl get deployments --namespace=monitoring
+kubectl create -f prometheus-service.yaml --namespace=monitoring
+
+now prometheous metrics are available on  
+
+localhost:30000/
+
+---------------------------------
+set up kube state metrices
+
+git clone https://github.com/devopscube/kube-state-metrics-configs.git
+kubectl apply -f kube-state-metrics-configs/
+kubectl get deployments kube-state-metrics -n kube-system
+------------------------------------------
+
+setup k8s alert manager
+
+git clone https://github.com/bibinwilson/kubernetes-alert-manager.git
+cd kubernetes-alert-manager
+kubectl create -f AlertManagerConfigmap.yaml
+kubectl create -f AlertTemplateConfigMap.yaml
+kubectl create -f Deployment.yaml
+kubectl create -f Service.yaml
+
+-------------------------------------
+setup grafana
+
+git clone https://github.com/bibinwilson/kubernetes-grafana.git
+cd kubernetes-grafana
+kubectl create -f grafana-datasource-config.yaml
+kubectl create -f deployment.yaml
+kubectl create -f service.yaml
+----
+
+then
+
+kubectl get pods -n monitoring
+---
+then copy the pod name and then
+
+kubectl port-forward -n monitoring <grafana-pod-name> 3000 &
+
+You will be able to access Grafana a from http://localhost:3000
+
+credientials
+User: admin
+Pass: admin
+----------------------
+Get the template ID from grafana public template. as shown below.
+Head over to the Grafana dashbaord and select the import option.
+type 8588 #in id
+-------------------------
+
+setting up prometheus Node Explorer
+
+git clone https://github.com/bibinwilson/kubernetes-node-exporter
+
+cd kubernetes-node-exporter
+kubectl create -f daemonset.yaml
+kubectl get daemonset -n monitoring
+kubectl create -f service.yaml
+
+----------------------------------------------------
+
+

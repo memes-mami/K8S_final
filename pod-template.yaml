@@ -1,0 +1,17 @@
+# pod-template.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: access-checkpoint-workerX  # Worker node number will replace X
+spec:
+  nodeName: workerX  # Worker node number will replace X
+  volumes:
+    - name: checkpoint-volume
+      hostPath:
+        path: /var/lib/kubelet/checkpoints
+  containers:
+    - name: access-container
+      image: nginx:latest
+      volumeMounts:
+        - mountPath: "/mnt/checkpoints"
+          name: checkpoint-volume
