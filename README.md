@@ -30,6 +30,7 @@ ix. I have used Access pods for obtaining the file from the worker node to the m
 Code to setup txt file contains the necessary commands to initialize the single Master multi node cluster in Kubernetes
 
 There might be some code files which are required missing hence download all files from another branch "all_files"
+Here the code files refer to the supporting files which i used for performing operations
 
 
 
