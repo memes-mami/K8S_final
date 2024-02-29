@@ -24,6 +24,7 @@ v.	Finding – finding the no of pods in a worker node
 vi.	Pods_ -- gives the no of pods in  worker node before and after migration
 vii.	Restore_ -- Total time taken for restore
 viii.	Startup_latency – time taken for the new pod to be running where we deploy our migrated application
+ix. I have used Access pods for obtaining the file from the worker node to the master node in order to migrate, there are multiple available other methods to do the same.
 
 
 Code to setup txt file contains the necessary commands to initialize the single Master multi node cluster in Kubernetes
