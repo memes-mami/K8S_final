@@ -28,5 +28,7 @@ viii.	Startup_latency – time taken for the new pod to be running where we depl
 
 Code to setup txt file contains the necessary commands to initialize the single Master multi node cluster in Kubernetes
 
+There might be some code files which are required missing hence download all files from another branch "all_files"
+
 
 
