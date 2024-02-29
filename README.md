@@ -1,4 +1,5 @@
 #My code path exaplined
+
 Basic flow using a particular algorithm
 
 1.	Getting the metrics of all the worker nodes and using a particular algorithm ranking these worker nodes according to CPU and memory as our parameters.
