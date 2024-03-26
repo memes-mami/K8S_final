@@ -1,4 +1,4 @@
-#My code path exaplined
+#My code path exaplained
 
 Basic flow using a particular algorithm
 
