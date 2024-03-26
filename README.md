@@ -17,14 +17,23 @@ Also we are checking for two applications
 
 The folders have files which correspond to 
 i.	Checktry    --  These files check the metrics of the top ranked node and if the metrics are more than the threshold , then we continue our process of checkpointing.
+
 ii.	Copy_tar --  These files contain reading time it took to copy the checkpointed tar file into the newly created pod to migrate to.
+
 iii.	Curl – time taken for checkpointing the pod of the overloaded node
+
 iv.	Extract – the time taken for restoring the .tar file in new node ( for restoring )
+
 v.	Finding – finding the no of pods in a worker node
+
 vi.	Pods_ -- gives the no of pods in  worker node before and after migration
+
 vii.	Restore_ -- Total time taken for restore
+
 viii.	Startup_latency – time taken for the new pod to be running where we deploy our migrated application
+
 ix. I have used Access pods for obtaining the file from the worker node to the master node in order to migrate, there are multiple available other methods to do the same.
+
 
 
 Code to setup txt file contains the necessary commands to initialize the single Master multi node cluster in Kubernetes
