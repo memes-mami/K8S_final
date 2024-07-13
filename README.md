@@ -1,45 +1,78 @@
-#My code path exaplained
 
-Basic flow using a particular algorithm
+## Code Path Explanation
 
-1.	Getting the metrics of all the worker nodes and using a particular algorithm ranking these worker nodes according to CPU and memory as our parameters.
-2.	Now after getting the rank of nodes we can now check if the metrics of the top ranked node is more than the threshold value .
-3.	If no then stop the further process and proceed to next cycle
-4.	If the value is more than threshold then list of the pods  in that node and find out the pod which is taking most metric value (CPU +memory) and save the name of the pod and the name of containers in the pod ( I have ran applications with single container in them and migrating that container )
-5.	Now  we migrate this pod from the top ranked node to the least ranked node as to reduce the total load on the node.
-6.	We have used multiple algorithms such as Electre-3 , Vikor and Topsis to rank the nodes and we are performing migrations according to these ranking.
-7.	We dynamically change the threshold required for migration by considering if the top ranked node metrics are more than threshold then we migrate and update our threshold values to the value of the top ranked over loaded node.
-In our experiment we are randomly adding applications to the worker nodes and for every 45 seconds running our algorithm and checking the metrices
+### Basic Workflow Using a Particular Algorithm
 
-Also we are checking for two applications 
-1)	Nginx , which is a stateless application
-2)	Zookeeper , which is a stateful application
+1. **Metrics Collection and Ranking**:
+   - Collect the metrics (CPU and memory usage) of all worker nodes.
+   - Use a specific algorithm (e.g., Electre-3, Vikor, Topsis) to rank these worker nodes based on the collected metrics.
 
-The folders have files which correspond to 
-i.	Checktry    --  These files check the metrics of the top ranked node and if the metrics are more than the threshold , then we continue our process of checkpointing.
+2. **Threshold Check**:
+   - Check if the metrics of the top-ranked node exceed a predefined threshold value.
+   - If the metrics do not exceed the threshold, stop the process and proceed to the next cycle.
+   - If the metrics exceed the threshold, proceed to the next steps.
 
-ii.	Copy_tar --  These files contain reading time it took to copy the checkpointed tar file into the newly created pod to migrate to.
+3. **Pod Identification**:
+   - List all the pods on the top-ranked node.
+   - Identify the pod consuming the most resources (CPU + memory).
+   - Save the name of this pod and its containers (note: the applications have a single container in each pod).
 
-iii.	Curl – time taken for checkpointing the pod of the overloaded node
+4. **Pod Migration**:
+   - Migrate the identified pod from the top-ranked node to the least ranked node to reduce the load on the top-ranked node.
 
-iv.	Extract – the time taken for restoring the .tar file in new node ( for restoring )
+5. **Algorithm Variants**:
+   - Multiple algorithms (Electre-3, Vikor, Topsis) are used to rank the nodes.
+   - Perform migrations based on these rankings.
 
-v.	Finding – finding the no of pods in a worker node
+6. **Dynamic Threshold Adjustment**:
+   - Dynamically change the threshold for migration.
+   - If the top-ranked node's metrics exceed the threshold, update the threshold to the metrics value of the overloaded node.
 
-vi.	Pods_ -- gives the no of pods in  worker node before and after migration
+### Experimental Setup
 
-vii.	Restore_ -- Total time taken for restore
+- **Frequency**:
+  - Randomly add applications to the worker nodes.
+  - Run the algorithm every 45 seconds to check the metrics and perform migrations if necessary.
 
-viii.	Startup_latency – time taken for the new pod to be running where we deploy our migrated application
+- **Applications Tested**:
+  - **Nginx**: A stateless application.
+  - **Zookeeper**: A stateful application.
 
-ix. I have used Access pods for obtaining the file from the worker node to the master node in order to migrate, there are multiple available other methods to do the same.
+### Folder Contents
 
+1. **Checktry**:
+   - Files that check the metrics of the top-ranked node.
+   - Continue the process of checkpointing if metrics exceed the threshold.
 
+2. **Copy_tar**:
+   - Files that measure the time taken to copy the checkpointed tar file to the newly created pod for migration.
 
-Code to setup txt file contains the necessary commands to initialize the single Master multi node cluster in Kubernetes
+3. **Curl**:
+   - Files that measure the time taken for checkpointing the pod on the overloaded node.
 
-There might be some code files which are required missing hence download all files from another branch "all_files"
-Here the code files refer to the supporting files which i used for performing operations
+4. **Extract**:
+   - Files that measure the time taken to restore the tar file on the new node.
 
+5. **Finding**:
+   - Files that find the number of pods on a worker node.
 
+6. **Pods_**:
+   - Files that provide the number of pods on a worker node before and after migration.
 
+7. **Restore_**:
+   - Files that measure the total time taken for restoration.
+
+8. **Startup_latency**:
+   - Files that measure the time taken for the new pod to start running after deployment.
+
+### Additional Notes
+
+- **Access Pods**:
+  - Used for obtaining the file from the worker node to the master node for migration.
+  - There are multiple other methods available to perform this operation.
+
+- **Setup**:
+  - The `setup.txt` file contains the necessary commands to initialize the single Master multi-node cluster in Kubernetes.
+
+- **Missing Files**:
+  - Some required files might be missing. Please download all files from another branch named "all_files" to ensure you have all the necessary supporting files for performing the operations.
